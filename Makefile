@@ -11,16 +11,17 @@
 .PHONY: install test build run docker-build docker-up
 
 install:
-	@echo "TODO: install dependencies" && exit 1
+	npm install --prefix backend
+	npm install --prefix frontend
 
 test:
-	@echo "TODO: run the test suite" && exit 1
+	npm test --prefix backend
 
 build:
-	@echo "TODO: build the project" && exit 1
+	npm run build --prefix frontend
 
 run:
-	@echo "TODO: start the app locally" && exit 1
+	npm start --prefix backend
 
 # Needed from M4 onwards
 docker-build:
