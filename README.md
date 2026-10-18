@@ -26,6 +26,18 @@ make install
 make run
 ```
 
+### Running with Docker
+
+```bash
+make docker-build
+make docker-up
+# Or directly:
+docker compose up --build
+```
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:3000
+- Health Check: http://localhost:3000/health
+
 ## Live URL
 
 <Add once M5 is done. Until then, leave as is.>

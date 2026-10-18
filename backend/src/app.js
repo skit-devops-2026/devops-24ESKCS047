@@ -8,8 +8,14 @@ import authRoutes from "./routes/authRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
 dotenv.config();
+
+// Custom DNS server configuration: preserve Docker DNS resolution unless connecting to Atlas SRV or explicitly requested
+if (process.env.DNS_SERVERS) {
+  dns.setServers(process.env.DNS_SERVERS.split(","));
+} else if (process.env.MONGO_URI?.startsWith("mongodb+srv://")) {
+  dns.setServers(["1.1.1.1", "8.8.8.8"]);
+}
 
 const app = express();
 
@@ -17,7 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
     credentials: true,
   })
 );

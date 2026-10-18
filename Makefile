@@ -8,7 +8,7 @@
 #   Java    install: ./mvnw -B dependency:go-offline
 #                                    test: ./mvnw test     build: ./mvnw package
 
-.PHONY: install test build run docker-build docker-up
+.PHONY: install test build run docker-build docker-up docker-down
 
 install:
 	npm install --prefix backend
@@ -25,7 +25,11 @@ run:
 
 # Needed from M4 onwards
 docker-build:
-	@echo "TODO: docker build for frontend and backend" && exit 1
+	docker build -t sayso-backend ./backend
+	docker build -t sayso-frontend ./frontend
 
 docker-up:
 	docker compose up --build
+
+docker-down:
+	docker compose down
