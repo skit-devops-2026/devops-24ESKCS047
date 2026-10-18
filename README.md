@@ -38,6 +38,14 @@ docker compose up --build
 - Backend API: http://localhost:3000
 - Health Check: http://localhost:3000/health
 
+### Running with Kubernetes
+
+```bash
+make k8s-apply
+# Or directly:
+kubectl apply -f k8s/
+```
+
 ## Live URL
 
 <Add once M5 is done. Until then, leave as is.>

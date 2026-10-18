@@ -8,7 +8,7 @@
 #   Java    install: ./mvnw -B dependency:go-offline
 #                                    test: ./mvnw test     build: ./mvnw package
 
-.PHONY: install test build run docker-build docker-up docker-down
+.PHONY: install test build run docker-build docker-up docker-down k8s-apply k8s-delete
 
 install:
 	npm install --prefix backend
@@ -33,3 +33,10 @@ docker-up:
 
 docker-down:
 	docker compose down
+
+# Needed from M7 onwards
+k8s-apply:
+	kubectl apply -f k8s/
+
+k8s-delete:
+	kubectl delete -f k8s/
