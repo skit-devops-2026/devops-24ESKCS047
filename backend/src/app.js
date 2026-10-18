@@ -28,12 +28,27 @@ app.use(
   })
 );
 
+import client from "prom-client";
+
+// Prometheus default metrics collection
+client.collectDefaultMetrics({ register: client.register });
+
 // Health check endpoint required by project specification
 app.get("/health", (req, res) => {
   res.status(200).json({
     status: "ok",
     commitSha: process.env.COMMIT_SHA || "local",
   });
+});
+
+// Prometheus metrics endpoint for monitoring
+app.get("/metrics", async (req, res) => {
+  try {
+    res.set("Content-Type", client.register.contentType);
+    res.end(await client.register.metrics());
+  } catch (err) {
+    res.status(500).end(err);
+  }
 });
 
 app.use("/api/auth", authRoutes);

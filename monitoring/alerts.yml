@@ -1,0 +1,29 @@
+groups:
+  - name: sayso-alerts
+    rules:
+      - alert: BackendServiceDown
+        expr: up{job="sayso-backend"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Sayso backend service is down"
+          description: "Sayso API service has been unreachable for more than 1 minute."
+
+      - alert: HighErrorRate
+        expr: rate(http_requests_total{code=~"5.."}[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High HTTP 5xx error rate detected"
+          description: "More than 5% of requests to Sayso backend are failing with 5xx status codes."
+
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes / 1024 / 1024 > 400
+        for: 3m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High backend process memory usage"
+          description: "Node.js process memory usage exceeded 400 MB."

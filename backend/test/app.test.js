@@ -18,6 +18,13 @@ describe("Backend API & Health Tests", () => {
 
     assert.strictEqual(res.status, 404);
   });
+
+  it("GET /metrics should return 200 OK and Prometheus metrics", async () => {
+    const res = await request(app).get("/metrics");
+
+    assert.strictEqual(res.status, 200);
+    assert.ok(res.text.includes("process_cpu_user_seconds_total"));
+  });
 });
 
 describe("Validation Utility Tests", () => {
