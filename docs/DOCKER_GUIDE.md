@@ -36,8 +36,8 @@ This guide translates all instructions and troubleshooting scenarios from the pr
    - `make docker-build`: builds both `sayso-backend` and `sayso-frontend`.
    - `make docker-up`: runs `docker compose up --build`.
    - `make docker-down`: stops and cleans containers.
-7. **[.github/workflows/ci.yml](file:///c:/Users/DELL/OneDrive/Desktop/Git%20Project/Sayso/.github/workflows/ci.yml)**:
-   - M4 Containerization pipeline to build and push backend and frontend images to GitHub Container Registry (`ghcr.io`).
+7. **[.github/workflows/ci.yml](file:///c:/Users/DELL/OneDrive/Desktop/Git%20Project/Sayso/.github/workflows/ci.yml)** and **[.github/workflows/docker-ci.yml](file:///c:/Users/DELL/OneDrive/Desktop/Git%20Project/Sayso/.github/workflows/docker-ci.yml)**:
+   - CI pipeline that builds images on every push, runs tests *inside* the container (`docker run --rm sayso-backend npm test`), tags with commit SHA, and pushes to GitHub Container Registry (`ghcr.io`).
 
 ---
 
