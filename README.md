@@ -48,7 +48,12 @@ kubectl apply -f k8s/
 
 ## Live URL
 
-<Add once M5 is done. Until then, leave as is.>
+https://anjali-kanwar.github.io/Social-Media/
+
+- Production URL: https://anjali-kanwar.github.io/Social-Media/
+- Live Health Endpoint: https://anjali-kanwar.github.io/Social-Media/health
+- Live Health JSON: https://anjali-kanwar.github.io/Social-Media/health.json
+- Live Metrics: https://anjali-kanwar.github.io/Social-Media/metrics
 
 ## Health endpoint
 

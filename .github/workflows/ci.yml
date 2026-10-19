@@ -78,5 +78,36 @@ jobs:
             ghcr.io/${{ github.repository }}-frontend:latest
 
   # ---------------------------------------------------------------------------
-  # M5 — Deployment. Add a deploy job here.
+  # M5 / M6 — Deployment. Deploys frontend & live health check to GitHub Pages.
   # ---------------------------------------------------------------------------
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build frontend
+        run: |
+          npm ci --prefix frontend || npm install --prefix frontend
+          npm run build --prefix frontend
+
+      - name: Inject live commit SHA into health check
+        run: |
+          echo "{\"status\":\"ok\",\"commitSha\":\"${{ github.sha }}\",\"service\":\"sayso-web\",\"timestamp\":\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"}" > frontend/dist/health
+          echo "{\"status\":\"ok\",\"commitSha\":\"${{ github.sha }}\",\"service\":\"sayso-web\",\"timestamp\":\"$(date -u +'%Y-%m-%dT%H:%M:%SZ')\"}" > frontend/dist/health.json
+
+      - name: Deploy to GitHub Pages (gh-pages branch)
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: frontend/dist
+          branch: gh-pages
