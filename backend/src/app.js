@@ -33,6 +33,16 @@ import client from "prom-client";
 // Prometheus default metrics collection
 client.collectDefaultMetrics({ register: client.register });
 
+// Root route returning live status
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    app: "Sayso",
+    health: "/health",
+    metrics: "/metrics",
+  });
+});
+
 // Health check endpoint required by project specification
 app.get("/health", (req, res) => {
   res.status(200).json({

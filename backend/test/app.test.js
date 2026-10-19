@@ -5,6 +5,14 @@ import app from "../src/app.js";
 import { isValidPostText } from "../src/utils/validation.js";
 
 describe("Backend API & Health Tests", () => {
+  it("GET / should return 200 OK and status 'ok'", async () => {
+    const res = await request(app).get("/");
+
+    assert.strictEqual(res.status, 200);
+    assert.strictEqual(res.body.status, "ok");
+    assert.strictEqual(res.body.app, "Sayso");
+  });
+
   it("GET /health should return 200 OK and status 'ok'", async () => {
     const res = await request(app).get("/health");
 
