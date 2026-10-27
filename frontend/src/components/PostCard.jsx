@@ -30,6 +30,7 @@ const PostCard = ({ post }) => {
         </div>
       </div>
 
+
       <style>{`
         .post-card {
           padding: 22px;
